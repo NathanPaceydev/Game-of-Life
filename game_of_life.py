@@ -1,7 +1,7 @@
-from turtle import width
+from turtle import delay, width
 from typing import final
 import pygame
-import random
+import numpy as np
 
 import button
 
@@ -45,6 +45,43 @@ exit_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WINDO
 
 def gridSetUp(size):
     return [[0]*size for _ in range(size)]
+
+def gameOfLife(board):
+        """
+        :type board: List[List[int]]
+        :rtype: None Do not return anything, modify board in-place instead.
+        """
+        dirs = [[-1,-1],[-1,0],[0,-1],[1,0],[0,1],[1,1],[1,-1],[-1,1]]
+        
+        numRows = len(board)
+        numCol = len(board[0])
+        
+        res = [[0]*numCol for i in range(numRows)]
+       
+        for i in range(numRows):
+            for j in range(numCol):
+                count = 0
+                
+                for dx,dy in dirs:
+                    deltaRow = dx+i
+                    deltaCol = dy+j
+                    
+                    if(numRows>deltaRow>-1) and (numCol>deltaCol>-1) and board[deltaRow][deltaCol]==1:
+                        count+=1
+                        
+                
+                if board[i][j]==1:
+                    if count<2 or count>3:
+                        res[i][j]=0
+                    else:
+                        res[i][j] = 1
+                else:
+                    if count==3:
+                        res[i][j] = 1
+                    else:
+                        res[i][j] = 0
+                    
+        return res[::] 
 
 def main():
     grid = gridSetUp(SIZE)
@@ -94,6 +131,8 @@ def main():
 
                     if start_button.draw(screen):
                         print("START")
+                        grid = gameOfLife(grid)
+
 
                     if exit_button.draw(screen):
                         runFlag = False
