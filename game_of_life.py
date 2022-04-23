@@ -21,13 +21,15 @@ GREEN = (0,255,0)
 RED = (255,0,0)
 
 #define some constants
-print("Enter the number of squares: ")
-SIZE = int(input())
+print("Enter the width of squares: ")
+WIDTH_SIZE = int(input())
+print("Enter the length of squares: ")
+LENGTH_SIZE = int(input())
 #grid height, width and margin for each square
 HEIGHT, WIDTH = 20,20
 MARGIN = 5
 
-WINDOW_SIZE = [255*SIZE/10,300*SIZE/10]
+WINDOW_SIZE = [255*WIDTH_SIZE/10,300*LENGTH_SIZE/10]
 
 screen = pygame.display.set_mode(WINDOW_SIZE)
 pygame.display.set_caption("Game of Life")
@@ -43,8 +45,8 @@ start_button = button.Button(WINDOW_SIZE[0]/2-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WI
 exit_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WINDOW_SIZE[0]/6,exit_image)
 
 
-def gridSetUp(size):
-    return [[0]*size for _ in range(size)]
+def gridSetUp(width,length):
+    return [[0]*width for _ in range(length)]
 
 def gameOfLife(board):
         """
@@ -84,7 +86,7 @@ def gameOfLife(board):
         return res[::] 
 
 def main():
-    grid = gridSetUp(SIZE)
+    grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
     pygame.init()
     try:
         clock = pygame.time.Clock()
@@ -107,7 +109,7 @@ def main():
                     col = pos[0]//(WIDTH+MARGIN)
                     row = pos[1]//(WIDTH+MARGIN)
                     
-                    if row <SIZE and col <SIZE:
+                    if row <LENGTH_SIZE and col <WIDTH_SIZE:
 
                         if grid[row][col]==0:
                             grid[row][col] = 1
@@ -117,8 +119,8 @@ def main():
 
             screen.fill(BLACK)
 
-            for row in range(SIZE):
-                for col in range(SIZE):
+            for row in range(LENGTH_SIZE):
+                for col in range(WIDTH_SIZE):
                     color = LIGHT_GREY
                     if grid[row][col] == 1:
                         color = GREEN
