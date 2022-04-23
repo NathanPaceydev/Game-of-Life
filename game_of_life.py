@@ -1,6 +1,9 @@
+from turtle import width
 from typing import final
 import pygame
 import random
+
+import button
 
 # importing the controls used to avoid library calls
 from pygame import (
@@ -34,21 +37,10 @@ arrow_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/5,WINDOW_SIZE[
 
 exit_image = pygame.image.load("exit_btn.png").convert_alpha()
 exit_image = pygame.transform.scale(exit_image,((WINDOW_SIZE[0]/5,WINDOW_SIZE[0]/6)))
-
-
-
-class Button():
-    def __init__(self,x,y,image):
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x,y)
-
-    def draw(self):
-        screen.blit(self.image, (self.rect.x,self.rect.y))
     
-start_button = Button(WINDOW_SIZE[0]/2-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WINDOW_SIZE[0]/6, arrow_image)
-exit_button = Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WINDOW_SIZE[0]/6,exit_image)
 
+start_button = button.Button(WINDOW_SIZE[0]/2-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WINDOW_SIZE[0]/6, arrow_image)
+exit_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WINDOW_SIZE[0]/6,exit_image)
 
 
 def gridSetUp(size):
@@ -100,8 +92,11 @@ def main():
                               WIDTH,
                               HEIGHT])
 
-                    start_button.draw()
-                    exit_button.draw()
+                    if start_button.draw(screen):
+                        print("START")
+
+                    if exit_button.draw(screen):
+                        runFlag = False
 
             clock.tick(60)
 
