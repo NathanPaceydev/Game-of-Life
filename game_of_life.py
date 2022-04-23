@@ -18,7 +18,8 @@ GREEN = (0,255,0)
 RED = (255,0,0)
 
 #define some constants
-SIZE = 20
+print("Enter the number of squares: ")
+SIZE = int(input())
 #grid height, width and margin for each square
 HEIGHT, WIDTH = 20,20
 MARGIN = 5
