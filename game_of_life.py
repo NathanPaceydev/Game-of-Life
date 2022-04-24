@@ -1,3 +1,4 @@
+from ctypes.wintypes import HICON
 from turtle import delay, width
 from typing import final
 import pygame
@@ -29,20 +30,20 @@ LENGTH_SIZE = int(input())
 HEIGHT, WIDTH = 20,20
 MARGIN = 5
 
-WINDOW_SIZE = [255*WIDTH_SIZE/10,300*LENGTH_SIZE/10]
+WINDOW_SIZE = [(WIDTH*WIDTH_SIZE+MARGIN*(WIDTH_SIZE+1)),(HEIGHT*(LENGTH_SIZE+2)+MARGIN*(LENGTH_SIZE+3))]
 
-screen = pygame.display.set_mode(WINDOW_SIZE)
+screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
 pygame.display.set_caption("Game of Life")
 
 arrow_image = pygame.image.load("start_btn.png").convert_alpha()
-arrow_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/5,WINDOW_SIZE[0]/6)))
-
 exit_image = pygame.image.load("exit_btn.png").convert_alpha()
-exit_image = pygame.transform.scale(exit_image,((WINDOW_SIZE[0]/5,WINDOW_SIZE[0]/6)))
+
+arrow_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
+exit_image = pygame.transform.scale(exit_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
     
 
-start_button = button.Button(WINDOW_SIZE[0]/2-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WINDOW_SIZE[0]/6, arrow_image)
-exit_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3,WINDOW_SIZE[1]-WINDOW_SIZE[0]/6,exit_image)
+start_button = button.Button(WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)), arrow_image)
+exit_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3-WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)),exit_image)
 
 
 def gridSetUp(width,length):
@@ -94,7 +95,12 @@ def main():
         runFlag = True
 
         while runFlag:
+            pygame.display.update()
             for event in pygame.event.get():
+                if event.type == pygame.VIDEORESIZE:
+                    #do something
+                    print("scale")
+
                 # did a user hit a key
                 if event.type == KEYDOWN:
                     # is it the esc key
@@ -145,7 +151,6 @@ def main():
 
     finally:
         pygame.quit()
-
 
 
 if __name__ == '__main__':
