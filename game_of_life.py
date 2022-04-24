@@ -1,6 +1,4 @@
 from ctypes.wintypes import HICON
-from turtle import delay, width
-from typing import final
 import pygame
 import numpy as np
 
@@ -29,8 +27,12 @@ LENGTH_SIZE = int(input())
 #grid height, width and margin for each square
 HEIGHT, WIDTH = 20,20
 MARGIN = 5
+delta = 0
 
-WINDOW_SIZE = [(WIDTH*WIDTH_SIZE+MARGIN*(WIDTH_SIZE+1)),(HEIGHT*(LENGTH_SIZE+2)+MARGIN*(LENGTH_SIZE+3))]
+if WIDTH_SIZE<4:
+    delta = WIDTH*4
+
+WINDOW_SIZE = [(WIDTH*WIDTH_SIZE+MARGIN*(WIDTH_SIZE+1)+delta),(HEIGHT*(LENGTH_SIZE+2)+MARGIN*(LENGTH_SIZE+3))]
 
 screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
 pygame.display.set_caption("Game of Life")
