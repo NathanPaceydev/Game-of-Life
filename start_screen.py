@@ -8,10 +8,15 @@ def start():
     clock = pygame.time.Clock()
     SCREEN_WIDTH = 600
     SCREEN_HEIGHT = 500
+    
+
     # it will display on screen
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-
+    icon = pygame.image.load("icon.png").convert_alpha()
+    pygame.display.set_icon(icon)
     pygame.display.set_caption("Game of Life")
+    
+
     # basic font for user typed
     base_font = pygame.font.Font(None, 30)
     user_text = ''
@@ -29,6 +34,8 @@ def start():
     # color of input box.
     color_passive = pygame.Color('chartreuse4')
     color = color_passive
+
+    
     
     active = False
     

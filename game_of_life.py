@@ -40,7 +40,12 @@ if WIDTH_SIZE<4:
 WINDOW_SIZE = [(WIDTH*WIDTH_SIZE+MARGIN*(WIDTH_SIZE+1)+delta),(HEIGHT*(LENGTH_SIZE+2)+MARGIN*(LENGTH_SIZE+3))]
 
 screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
+
+icon = pygame.image.load("icon.png").convert_alpha()
+pygame.display.set_icon(icon)
+
 pygame.display.set_caption("Game of Life")
+
 
 arrow_image = pygame.image.load("start_btn.png").convert_alpha()
 exit_image = pygame.image.load("exit_btn.png").convert_alpha()
