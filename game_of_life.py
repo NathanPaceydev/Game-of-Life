@@ -1,6 +1,6 @@
 from ctypes.wintypes import HICON
 import pygame
-import numpy as np
+
 
 import button
 from start_screen import start
