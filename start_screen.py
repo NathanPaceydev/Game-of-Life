@@ -13,7 +13,9 @@ def start():
     # basic font for user typed
     base_font = pygame.font.Font(None, 32)
     user_text = ''
-    
+    input_text = base_font.render('Enter the Squares Width', True, (1,0,128))
+    input_text_Rect = input_text.get_rect()
+    input_text_Rect.center = (325,175)
     # create rectangle
     input_rect = pygame.Rect(200, 200, 140, 32)
     
@@ -48,7 +50,7 @@ def start():
                 if event.key == pygame.K_BACKSPACE:
                     # get text input from 0 to -1 i.e. end.
                     user_text = user_text[:-1]
-                    
+
                 # Unicode standard is used for string
                 # formation
                 else:
@@ -58,13 +60,15 @@ def start():
                     if count == 0:
                         width = user_text
                         user_text = ''
+                        input_text = base_font.render('Enter the Squares Length', True, (200,0,150))
+
                     if count == 1:
                         length = user_text
                         user_text = ''
                         return width,length
+
                     count+=1
                
-        
         # it will set background color of screen
         screen.fill((255, 255, 255))
     
@@ -81,6 +85,7 @@ def start():
         
         # render at position stated in arguments
         screen.blit(text_surface, (input_rect.x+5, input_rect.y+5))
+        screen.blit(input_text,input_text_Rect)
         
         # set width of textfield so that text cannot get
         # outside of user's text input
