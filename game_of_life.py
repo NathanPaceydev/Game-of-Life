@@ -3,6 +3,7 @@ import pygame
 import numpy as np
 
 import button
+from start_screen import start
 
 # importing the controls used to avoid library calls
 from pygame import (
@@ -20,10 +21,14 @@ GREEN = (0,255,0)
 RED = (255,0,0)
 
 #define some constants
-print("Enter the width of squares: ")
-WIDTH_SIZE = int(input())
-print("Enter the length of squares: ")
-LENGTH_SIZE = int(input())
+
+#print("Enter the width of squares: ")
+WIDTH_SIZE_STR,LENGTH_SIZE_STR = start()
+
+WIDTH_SIZE = int(WIDTH_SIZE_STR)
+LENGTH_SIZE = int(LENGTH_SIZE_STR)
+#print("Enter the length of squares: ")
+
 #grid height, width and margin for each square
 HEIGHT, WIDTH = 20,20
 MARGIN = 5
