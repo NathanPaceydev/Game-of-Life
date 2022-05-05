@@ -6,18 +6,20 @@ def start():
     pygame.init()
   
     clock = pygame.time.Clock()
-    
+    SCREEN_WIDTH = 600
+    SCREEN_HEIGHT = 500
     # it will display on screen
-    screen = pygame.display.set_mode([600, 500])
+    screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+
     pygame.display.set_caption("Game of Life")
     # basic font for user typed
-    base_font = pygame.font.Font(None, 32)
+    base_font = pygame.font.Font(None, 30)
     user_text = ''
-    input_text = base_font.render('Enter the Squares Width', True, (1,0,128))
+    input_text = base_font.render('Enter the Width of the Grid:', True, (1,0,128))
     input_text_Rect = input_text.get_rect()
-    input_text_Rect.center = (325,175)
+    input_text_Rect.center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2)
     # create rectangle
-    input_rect = pygame.Rect(200, 200, 140, 32)
+    input_rect = pygame.Rect(SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2+25, 200, 32)
     
     # color_active stores color(lightskyblue3) which
     # gets active when input box is clicked by user
@@ -60,7 +62,7 @@ def start():
                     if count == 0:
                         width = user_text
                         user_text = ''
-                        input_text = base_font.render('Enter the Squares Length', True, (200,0,150))
+                        input_text = base_font.render('Enter the Height of the Grid:', True, (200,0,150))
 
                     if count == 1:
                         length = user_text
@@ -89,7 +91,7 @@ def start():
         
         # set width of textfield so that text cannot get
         # outside of user's text input
-        input_rect.w = max(100, text_surface.get_width()+10)
+        input_rect.w = max(200, text_surface.get_width()+10)
         
         # display.flip() will update only a portion of the
         # screen to updated, not full area
