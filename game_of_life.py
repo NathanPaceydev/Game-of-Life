@@ -1,7 +1,6 @@
 from ctypes.wintypes import HICON
 import pygame
 
-
 import button
 from start_screen import start
 
@@ -14,7 +13,7 @@ from pygame import (
 )
 
 #define the colors in RGB
-BLACK = (0,0,0)
+GREY = (130,130,130)
 WHITE = (255,255,255)
 LIGHT_GREY = (250,240,250)
 GREEN = (0,255,0)
@@ -101,6 +100,7 @@ def gameOfLife(board):
 def main():
     grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
     pygame.init()
+    
     try:
         clock = pygame.time.Clock()
 
@@ -135,7 +135,7 @@ def main():
                             grid[row][col]=0
                         print("Clicked ", row, col)
 
-            screen.fill(BLACK)
+            screen.fill(GREY)
 
             for row in range(LENGTH_SIZE):
                 for col in range(WIDTH_SIZE):

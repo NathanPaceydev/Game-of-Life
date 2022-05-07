@@ -1,10 +1,10 @@
 import pygame
 import sys
 
+
 def start():
     count = 0
     pygame.init()
-  
     clock = pygame.time.Clock()
     SCREEN_WIDTH = 600
     SCREEN_HEIGHT = 500
