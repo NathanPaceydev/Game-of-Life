@@ -82,7 +82,6 @@ def gameOfLife(board):
                     
                     if(numRows>deltaRow>-1) and (numCol>deltaCol>-1) and board[deltaRow][deltaCol]==1:
                         count+=1
-                        
                 
                 if board[i][j]==1:
                     if count<2 or count>3:
@@ -155,7 +154,8 @@ def main():
 
 
                     if exit_button.draw(screen):
-                        runFlag = False
+                        grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
+                        #runFlag = False
 
             clock.tick(60)
 
