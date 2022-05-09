@@ -47,9 +47,11 @@ pygame.display.set_caption("Game of Life")
 
 
 arrow_image = pygame.image.load("start_btn.png").convert_alpha()
+next_image = pygame.image.load("next_btn.png").convert_alpha()
 exit_image = pygame.image.load("exit_btn.png").convert_alpha()
 
 arrow_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
+next_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
 exit_image = pygame.transform.scale(exit_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
     
 
@@ -151,7 +153,6 @@ def main():
                     if start_button.draw(screen):
                         print("START")
                         grid = gameOfLife(grid)
-
 
                     if exit_button.draw(screen):
                         grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
