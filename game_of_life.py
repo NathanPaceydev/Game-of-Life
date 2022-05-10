@@ -1,4 +1,5 @@
 from ctypes.wintypes import HICON
+import numpy
 import pygame
 
 import button
@@ -51,11 +52,13 @@ next_image = pygame.image.load("next_btn.png").convert_alpha()
 exit_image = pygame.image.load("exit_btn.png").convert_alpha()
 
 arrow_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
-next_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
+next_image = pygame.transform.scale(next_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
 exit_image = pygame.transform.scale(exit_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
     
 
 start_button = button.Button(WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)), arrow_image)
+next_button = button.Button(WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)), next_image)
+
 exit_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3-WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)),exit_image)
 
 
@@ -107,6 +110,12 @@ def main():
 
         runFlag = True
 
+        screen.fill(GREY)
+
+        start_button.draw(screen)
+        
+        exit_button.draw(screen)
+
         while runFlag:
             pygame.display.update()
             for event in pygame.event.get():
@@ -136,8 +145,6 @@ def main():
                             grid[row][col]=0
                         print("Clicked ", row, col)
 
-            screen.fill(GREY)
-
             for row in range(LENGTH_SIZE):
                 for col in range(WIDTH_SIZE):
                     color = LIGHT_GREY
@@ -150,13 +157,19 @@ def main():
                               WIDTH,
                               HEIGHT])
 
-                    if start_button.draw(screen):
-                        print("START")
-                        grid = gameOfLife(grid)
+            if start_button.click():
+                print("START")
+                next_button.draw(screen)
+                grid = gameOfLife(grid)
 
-                    if exit_button.draw(screen):
-                        grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
-                        #runFlag = False
+            if exit_button.click():
+                grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
+                #runFlag = False
+                start_button.draw(screen)
+
+            np_grid = numpy.array(grid)
+            if (numpy.all(np_grid == 0)):
+                start_button.draw(screen)
 
             clock.tick(60)
 

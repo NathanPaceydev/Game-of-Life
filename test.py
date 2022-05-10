@@ -1,87 +1,78 @@
-# import sys module
+
 import pygame
-import sys
-  
-  
-# pygame.init() will initialize all
-# imported module
+
+import button
+
+from pygame import (
+    MOUSEBUTTONDOWN,
+    QUIT,
+    K_ESCAPE,
+    KEYDOWN
+)
+
+WINDOW_SIZE =(500,500)
+LENGTH_SIZE = 10
+HEIGHT, WIDTH = 20,20
+MARGIN = 5
+#define some constants
+screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
+
+icon = pygame.image.load("icon.png").convert_alpha()
+pygame.display.set_icon(icon)
+
+pygame.display.set_caption("$$ TEST $$ Game of Life")
+
+
+arrow_image = pygame.image.load("start_btn.png").convert_alpha()
+next_image = pygame.image.load("next_btn.png").convert_alpha()
+exit_image = pygame.image.load("exit_btn.png").convert_alpha()
+
+arrow_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
+next_image = pygame.transform.scale(next_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
+exit_image = pygame.transform.scale(exit_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
+    
+
+start_button = button.Button(WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)), arrow_image)
+exit_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3-WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)),exit_image)
+next_button = button.Button(WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)), next_image)
 pygame.init()
-  
+
 clock = pygame.time.Clock()
-  
-# it will display on screen
-screen = pygame.display.set_mode([600, 500])
-  
-# basic font for user typed
-base_font = pygame.font.Font(None, 32)
-user_text = ''
-  
-# create rectangle
-input_rect = pygame.Rect(200, 200, 140, 32)
-  
-# color_active stores color(lightskyblue3) which
-# gets active when input box is clicked by user
-color_active = pygame.Color('lightskyblue3')
-  
-# color_passive store color(chartreuse4) which is
-# color of input box.
-color_passive = pygame.Color('chartreuse4')
-color = color_passive
-  
-active = False
-  
-while True:
+
+runFlag = True
+
+
+while runFlag:
+    pygame.display.update()
     for event in pygame.event.get():
-  
-      # if user types QUIT then the screen will close
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-  
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if input_rect.collidepoint(event.pos):
-                active = True
-            else:
-                active = False
-  
-        if event.type == pygame.KEYDOWN:
-  
-            # Check for backspace
-            if event.key == pygame.K_BACKSPACE:
-  
-                # get text input from 0 to -1 i.e. end.
-                user_text = user_text[:-1]
-  
-            # Unicode standard is used for string
-            # formation
-            else:
-                user_text += event.unicode
-      
-    # it will set background color of screen
+        if event.type == pygame.VIDEORESIZE:
+            #do something
+            print("scale")
+
+        # did a user hit a key
+        if event.type == KEYDOWN:
+            # is it the esc key
+            if event.key == K_ESCAPE:
+                runflag = False
+
+        elif event.type == QUIT:
+            runFlag = False
+     # it will set background color of screen
     screen.fill((255, 255, 255))
-  
-    if active:
-        color = color_active
-    else:
-        color = color_passive
-          
-    # draw rectangle and argument passed which should
-    # be on screen
-    pygame.draw.rect(screen, color, input_rect)
-  
-    text_surface = base_font.render(user_text, True, (255, 255, 255))
-      
-    # render at position stated in arguments
-    screen.blit(text_surface, (input_rect.x+5, input_rect.y+5))
-      
-    # set width of textfield so that text cannot get
-    # outside of user's text input
-    input_rect.w = max(100, text_surface.get_width()+10)
-      
-    # display.flip() will update only a portion of the
-    # screen to updated, not full area
-    pygame.display.flip()
-      
-    # clock.tick(60) means that for every second at most
-    # 60 frames should be passed.
+    
+    start_button.draw(screen)
+    
+    if start_button.draw(screen):
+        next_button.draw(screen)
+       
+
+    #grid = gameOfLife(grid)
+
+    if exit_button.draw(screen):
+    #    #grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
+        #runFlag = False
+       print("exit")
+
     clock.tick(60)
+
+    pygame.display.flip()
