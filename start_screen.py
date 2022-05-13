@@ -1,3 +1,4 @@
+from cmath import log
 import pygame
 import sys
 
@@ -15,6 +16,10 @@ def start():
     icon = pygame.image.load("icon.png").convert_alpha()
     pygame.display.set_icon(icon)
     pygame.display.set_caption("Game of Life")
+
+    logo = pygame.image.load('logo.JPG').convert_alpha()
+    logo = pygame.transform.scale(logo,((SCREEN_WIDTH-100,SCREEN_HEIGHT/3)))
+    
     
 
     # basic font for user typed
@@ -22,9 +27,9 @@ def start():
     user_text = ''
     input_text = base_font.render('Enter the Width of the Grid:', True, (1,0,128))
     input_text_Rect = input_text.get_rect()
-    input_text_Rect.center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2)
+    input_text_Rect.center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2+50)
     # create rectangle
-    input_rect = pygame.Rect(SCREEN_WIDTH/2-100,SCREEN_HEIGHT/2+25, 200, 32)
+    input_rect = pygame.Rect(SCREEN_WIDTH/2-130,SCREEN_HEIGHT/2+75, 200, 32)
     
     # color_active stores color(lightskyblue3) which
     # gets active when input box is clicked by user
@@ -95,6 +100,7 @@ def start():
         # render at position stated in arguments
         screen.blit(text_surface, (input_rect.x+5, input_rect.y+5))
         screen.blit(input_text,input_text_Rect)
+        screen.blit(logo,(SCREEN_WIDTH/10,SCREEN_HEIGHT/15))
         
         # set width of textfield so that text cannot get
         # outside of user's text input
