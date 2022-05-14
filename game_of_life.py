@@ -1,3 +1,4 @@
+#!/usr/bin/bash 'C:\Users\npace\AppData\Local\Programs\Python\Python310\python.exe'
 from ctypes.wintypes import HICON
 import numpy
 import pygame
