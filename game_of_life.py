@@ -41,7 +41,7 @@ if WIDTH_SIZE<4:
 
 WINDOW_SIZE = [(WIDTH*WIDTH_SIZE+MARGIN*(WIDTH_SIZE+1)+delta),(HEIGHT*(LENGTH_SIZE+2)+MARGIN*(LENGTH_SIZE+3))]
 
-screen = pygame.display.set_mode(WINDOW_SIZE, pygame.RESIZABLE)
+screen = pygame.display.set_mode(WINDOW_SIZE)
 
 icon = pygame.image.load("icon.png").convert_alpha()
 pygame.display.set_icon(icon)
@@ -121,9 +121,9 @@ def main():
         while runFlag:
             pygame.display.update()
             for event in pygame.event.get():
-                if event.type == pygame.VIDEORESIZE:
+                #if event.type == pygame.VIDEORESIZE:
                     #do something
-                    print("scale")
+                   # print("scale")
 
                 # did a user hit a key
                 if event.type == KEYDOWN:
