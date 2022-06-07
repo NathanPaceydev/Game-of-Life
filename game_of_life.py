@@ -16,7 +16,6 @@ from pygame import (
 
 #define the colors in RGB
 GREY = (130,130,130)
-
 WHITE = (255,255,255)
 LIGHT_GREY = (250,240,250)
 GREEN = (0,255,0)
