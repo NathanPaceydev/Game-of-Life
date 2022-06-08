@@ -1,5 +1,5 @@
 #!/usr/bin/bash 
-from ctypes.wintypes import HICON
+
 import numpy
 import pygame
 
@@ -8,7 +8,6 @@ from start_screen import start
 
 # importing the controls used to avoid library calls
 from pygame import (
-    MOUSEBUTTONDOWN,
     QUIT,
     K_ESCAPE,
     KEYDOWN
@@ -16,19 +15,18 @@ from pygame import (
 
 #define the colors in RGB
 GREY = (130,130,130)
+
+
 WHITE = (255,255,255)
 LIGHT_GREY = (250,240,250)
 GREEN = (0,255,0)
 RED = (255,0,0)
 
 #define some constants
-
-#print("Enter the width of squares: ")
 WIDTH_SIZE_STR,LENGTH_SIZE_STR = start()
 
 WIDTH_SIZE = int(WIDTH_SIZE_STR)
 LENGTH_SIZE = int(LENGTH_SIZE_STR)
-#print("Enter the length of squares: ")
 
 #grid height, width and margin for each square
 HEIGHT, WIDTH = 20,20
@@ -50,27 +48,22 @@ pygame.display.set_caption("Game of Life")
 
 arrow_image = pygame.image.load("start_btn.png").convert_alpha()
 next_image = pygame.image.load("next_btn.png").convert_alpha()
-exit_image = pygame.image.load("exit_btn.png").convert_alpha()
+clear_image = pygame.image.load("clear_btn.png").convert_alpha()
 
 arrow_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
 next_image = pygame.transform.scale(next_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
-exit_image = pygame.transform.scale(exit_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
+clear_image = pygame.transform.scale(clear_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
     
 
 start_button = button.Button(WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)), arrow_image)
 next_button = button.Button(WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)), next_image)
-
-exit_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3-WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)),exit_image)
+clear_button = button.Button(WINDOW_SIZE[0]-WINDOW_SIZE[0]/3-WINDOW_SIZE[0]/10,(HEIGHT*LENGTH_SIZE+MARGIN*(LENGTH_SIZE+1)),clear_image)
 
 
 def gridSetUp(width,length):
     return [[0]*width for _ in range(length)]
 
 def gameOfLife(board):
-        """
-        :type board: List[List[int]]
-        :rtype: None Do not return anything, modify board in-place instead.
-        """
         dirs = [[-1,-1],[-1,0],[0,-1],[1,0],[0,1],[1,1],[1,-1],[-1,1]]
         
         numRows = len(board)
@@ -114,15 +107,11 @@ def main():
         screen.fill(GREY)
 
         start_button.draw(screen)
-        
-        exit_button.draw(screen)
+        clear_button.draw(screen)
 
         while runFlag:
             pygame.display.update()
             for event in pygame.event.get():
-                #if event.type == pygame.VIDEORESIZE:
-                    #do something
-                   # print("scale")
 
                 # did a user hit a key
                 if event.type == KEYDOWN:
@@ -163,9 +152,8 @@ def main():
                 next_button.draw(screen)
                 grid = gameOfLife(grid)
 
-            if exit_button.click():
+            if clear_button.click():
                 grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
-                #runFlag = False
                 start_button.draw(screen)
 
             np_grid = numpy.array(grid)
