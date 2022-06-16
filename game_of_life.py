@@ -1,5 +1,7 @@
-#!/usr/bin/bash 
+#!/usr/bin/bash python
 # This file serves as the main file implementing the main game screen and the algorithm to make the game work
+# The game starts by calling a seperate file start_screen.py which takes user input for the number of cells
+# This file also instatiates the button class for the start, clear and next button
 
 # import all librairies and modules used
 import numpy
@@ -22,7 +24,7 @@ LIGHT_GREY = (250,240,250)
 GREEN = (0,255,0)
 RED = (255,0,0)
 
-# define some constants
+# call the start screen script to start the game and set the number of cells
 WIDTH_SIZE_STR,LENGTH_SIZE_STR = start()
 WIDTH_SIZE = int(WIDTH_SIZE_STR)
 LENGTH_SIZE = int(LENGTH_SIZE_STR)
@@ -78,14 +80,15 @@ def gameOfLife(board):
         res = [[0]*numCol for i in range(numRows)]
        
        # update the new grid based on the rules of evolution in the game of life
+       # Loop through each cell in the grid
         for i in range(numRows):
             for j in range(numCol):
                 count = 0
-                
+                # loop through all the neighbors of the current cell
                 for dx,dy in dirs:
                     deltaRow = dx+i
                     deltaCol = dy+j
-                    
+                    # make the changes based on the rules
                     if(numRows>deltaRow>-1) and (numCol>deltaCol>-1) and board[deltaRow][deltaCol]==1:
                         count+=1
                 
@@ -105,33 +108,41 @@ def gameOfLife(board):
 
 # main function to set up the game
 def main():
-    # set up 
+    # set up 2D array with function
     grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
+    
+    # call pygame
     pygame.init()
     
+    # put main code in a try catch to make the exit button not throw error
     try:
+        # start the game clock and declare exit loop boolean
         clock = pygame.time.Clock()
-
         runFlag = True
 
+        # set background color and draw the buttons
         screen.fill(GREY)
-
         start_button.draw(screen)
         clear_button.draw(screen)
 
+        # main game loop
         while runFlag:
             pygame.display.update()
 
+            # get inputs from events tuples
             for event in pygame.event.get():
                 # did a user hit a key
                 if event.type == KEYDOWN:
                     # is it the esc key
                     if event.key == K_ESCAPE:
                         runflag = False
-
+                # if quit button stop the game
                 elif event.type == QUIT:
                     runFlag = False
 
+                # if the user clicks get the position
+                # convert the position to either a cell or a border
+                # if the user hit the cell update the grid from 0 -> 1
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
                     col = pos[0]//(WIDTH+MARGIN)
@@ -145,38 +156,46 @@ def main():
                             grid[row][col]=0
                         print("Clicked ", row, col)
 
+            # change the color of the grid cells based on the updated 2D grid
             for row in range(LENGTH_SIZE):
                 for col in range(WIDTH_SIZE):
                     color = LIGHT_GREY
+
                     if grid[row][col] == 1:
                         color = GREEN
+
                     pygame.draw.rect(screen,
                              color,
                              [(MARGIN + WIDTH) * col + MARGIN,
                               (MARGIN + HEIGHT) * row + MARGIN,
                               WIDTH,
                               HEIGHT])
-
+            # if the user hits the start button call the evolution function
+            # after the start button is hit change it to next button
             if start_button.click():
                 print("START")
                 next_button.draw(screen)
                 grid = gameOfLife(grid)
 
+            # if the clear button is hit reset the grid
+            # change next button to start
             if clear_button.click():
                 grid = gridSetUp(WIDTH_SIZE,LENGTH_SIZE)
                 start_button.draw(screen)
 
+            # if the grid is clear change the button to start
             np_grid = numpy.array(grid)
             if (numpy.all(np_grid == 0)):
                 start_button.draw(screen)
 
-            clock.tick(60)
+            clock.tick(60) #define the time
 
-            pygame.display.flip()
+            pygame.display.flip() # update the pygame module
 
+    # quit if runflag
     finally:
         pygame.quit()
 
-
+# call main
 if __name__ == '__main__':
     main()

@@ -1,9 +1,13 @@
+# This files sets up a pygame window to take user input for the number of cells width/length 
+# the game should be. After entering a int number for both width and length the script returns 
+# these values to game_of_life.py
+
 from cmath import log
 import pygame
 import sys
 
-
 def start():
+    # set up pygame window
     count = 0
     pygame.init()
     clock = pygame.time.Clock()
@@ -11,20 +15,18 @@ def start():
     SCREEN_HEIGHT = 500
     
 
-    # it will display on screen
+    # set up screen and display images on screen
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     icon = pygame.image.load("icon.png").convert_alpha()
     pygame.display.set_icon(icon)
     pygame.display.set_caption("Game of Life")
-
     logo = pygame.image.load('logo.JPG').convert_alpha()
     logo = pygame.transform.scale(logo,((SCREEN_WIDTH-100,SCREEN_HEIGHT/3)))
-    
-    
 
-    # basic font for user typed
+    # set basic font for user typed
     base_font = pygame.font.Font(None, 30)
     user_text = ''
+    # set the input text and display it
     input_text = base_font.render('Enter the Width of the Grid:', True, (1,0,128))
     input_text_Rect = input_text.get_rect()
     input_text_Rect.center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2+50)
@@ -39,43 +41,44 @@ def start():
     # color of input box.
     color_passive = pygame.Color('chartreuse4')
     color = color_passive
-
     
-    
+    # set the main loop boolean
     active = False
-    
+    # main game loop
     while True:
+        # get user input
         for event in pygame.event.get():
     
         # if user types QUIT then the screen will close
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-    
+            # if the user hits the input bar make it active    
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if input_rect.collidepoint(event.pos):
                     active = True
                 else:
                     active = False
-    
+
+            # if the user types get the input
             if event.type == pygame.KEYDOWN:
-    
-                # Check for backspace
+                # Check for backspace and preform deletion
                 if event.key == pygame.K_BACKSPACE:
                     # get text input from 0 to -1 i.e. end.
                     user_text = user_text[:-1]
 
-                # Unicode standard is used for string
-                # formation
+                # Unicode standard is used for string formation
                 else:
                     user_text += event.unicode
 
+                # if return pressed
                 if event.key == pygame.K_RETURN:
                     if count == 0:
                         width = user_text
                         user_text = ''
                         input_text = base_font.render('Enter the Height of the Grid:', True, (200,0,150))
 
+                    # if the user entered both parameters
                     if count == 1:
                         length = user_text
                         user_text = ''
@@ -85,7 +88,8 @@ def start():
                
         # it will set background color of screen
         screen.fill((255, 255, 255))
-    
+
+        #change color based on user clicks
         if active:
             color = color_active
         else:
@@ -94,7 +98,8 @@ def start():
         # draw rectangle and argument passed which should
         # be on screen
         pygame.draw.rect(screen, color, input_rect)
-    
+
+        # render text
         text_surface = base_font.render(user_text, True, (255, 255, 255))
         
         # render at position stated in arguments
