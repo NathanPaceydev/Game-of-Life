@@ -44,14 +44,14 @@ WINDOW_SIZE = [(WIDTH*WIDTH_SIZE+MARGIN*(WIDTH_SIZE+1)+delta),(HEIGHT*(LENGTH_SI
 
 # set the screen, icon and caption
 screen = pygame.display.set_mode(WINDOW_SIZE)
-icon = pygame.image.load("icon.png").convert_alpha()
+icon = pygame.image.load("./Media/icon.png").convert_alpha()
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Game of Life")
 
 # load the images
-arrow_image = pygame.image.load("start_btn.png").convert_alpha()
-next_image = pygame.image.load("next_btn.png").convert_alpha()
-clear_image = pygame.image.load("clear_btn.png").convert_alpha()
+arrow_image = pygame.image.load("./Media/start_btn.png").convert_alpha()
+next_image = pygame.image.load("./Media/next_btn.png").convert_alpha()
+clear_image = pygame.image.load("./Media/clear_btn.png").convert_alpha()
 
 # scale the images
 arrow_image = pygame.transform.scale(arrow_image,((WINDOW_SIZE[0]/3,HEIGHT*2)))
