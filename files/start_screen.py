@@ -17,10 +17,10 @@ def start():
 
     # set up screen and display images on screen
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-    icon = pygame.image.load("./Media/icon.png").convert_alpha()
+    icon = pygame.image.load("./media/icon.png").convert_alpha()
     pygame.display.set_icon(icon)
     pygame.display.set_caption("Game of Life")
-    logo = pygame.image.load('./Media/logo.JPG').convert_alpha()
+    logo = pygame.image.load('./media/logo.JPG').convert_alpha()
     logo = pygame.transform.scale(logo,((SCREEN_WIDTH-100,SCREEN_HEIGHT/3)))
 
     # set basic font for user typed
